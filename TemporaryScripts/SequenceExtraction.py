@@ -9,7 +9,6 @@ import os
 import pandas as pd
 import pickle 
 
-os.chdir("Downloads/")
 igap_thresholded_snp_list = pd.read_csv("SNPs_Thres_0.05",sep=" ")
 sequences = {}
 Entrez.email  = "pradluzog@gmail.com"

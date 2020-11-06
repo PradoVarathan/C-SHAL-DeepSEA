@@ -1,2 +1,2 @@
 1. SNPs_Thres_0.05 - File containing complete GWAS statistics for SNP variants with p < 0.05
-Sequences.pkl - File containing a dictionary of rsid as keys and sequences, alleles as values.
+2. Sequences.pkl - File containing a dictionary of rsid as keys and sequences, alleles as values.
