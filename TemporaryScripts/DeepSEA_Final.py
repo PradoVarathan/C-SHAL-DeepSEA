@@ -12,8 +12,6 @@ from sklearn.metrics import *
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from Bio import Entrez, SeqIO
-Entrez.email  = "pradluzog@gmail.com"
 import pickle
 
 #We will define some additional imports to use GPU
@@ -34,6 +32,7 @@ torch.backends.cudnn.deterministic = True
 
 
 def one_hot_encode(seq):
+    seq = seq.lower()
     mat_list = [np.eye(4)[i] for i in range(4)]
     mapping = dict(zip(['a','c','g','t'],mat_list))
     seq_one_hot =  np.stack([mapping[i] for i in seq]).T   
@@ -101,7 +100,7 @@ def Run_Deepsea(seq,a1,a2):
 CNN = DeepSEA().to(device)
 
 # Read the best parameters shared by the authors of the paper
-best_model = torch.load("best_model.pkl")
+best_model = torch.load("/N/slate/ppugale/DEEPSEA_FULLDATA/Complete_data/deepsea_bestmodel.pkl")
 
 # load the best parameters to newly created DeepSEA network
 CNN.load_state_dict(best_model)
@@ -112,17 +111,18 @@ print("best model loaded")
 # Define cost function and send it to GPU.
 cost_function = nn.BCEWithLogitsLoss().to(device)
 
-seq_list = pickle.load("Sequences.pkl")
+seq_list = pickle.load(open("Sequences.pkl","rb"))
 final_results = {}
 detailed_final_results = {}
 for rsid in seq_list.keys():
     print(f"Running ... {rsid}")
     seq = seq_list[rsid][0]
     a1 = seq_list[rsid][1]
-    a1 = seq_list[rsid][2]
-    log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2)
-    detailed_final_results[rsid] = [P_ref,P_alt]
-    final_results[rsid] = log_changes
+    a2 = seq_list[rsid][2]
+    if seq != None:
+        log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2)
+        detailed_final_results[rsid] = [P_ref,P_alt]
+        final_results[rsid] = log_changes
 
 print(final_results[rsid])  #Printing the last rsid
 output = open('Final_Output.pkl','wb')
@@ -132,5 +132,3 @@ output.close()
 output2 = open('Detailed_Final_Output.pkl','wb')
 pickle.dump(detailed_final_results,output2)
 output2.close()
-
-
