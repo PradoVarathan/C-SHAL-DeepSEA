@@ -75,10 +75,11 @@ def log_change(P_ref,P_alt):
   term2 = np.log(P_alt/(1-P_alt))
   return abs(term1-term2)
 
-def Run_Deepsea(seq_ref,alt_allele):
+def Run_Deepsea(seq,a1,a2):
+    seq_ref = seq[0:500] + a1 + seq[501:]
     mapping,seq_one_hot_ref = one_hot_encode(seq_ref)
     x_ref = torch.tensor(seq_one_hot_ref.reshape(1,4,1000),dtype=torch.float).to(device)  #reshaping, converting to tensor and putting on GPU. We nee shape (1,4,1000) since 1st shape represents no of data points
-    seq_alt = seq_ref[0:500] + alt_allele +seq_ref[501:]
+    seq_alt = seq[0:500] + a2 +seq[501:]
     mapping, seq_one_hot_alt = one_hot_encode(seq_alt)
     x_alt =  torch.tensor(seq_one_hot_alt.reshape(1,4,1000),dtype=torch.float).to(device)
     CNN.eval()
@@ -91,29 +92,16 @@ def Run_Deepsea(seq_ref,alt_allele):
     P_alt = P_alt.detach().cpu().reshape(-1).numpy()  
     LC = log_change(P_ref,P_alt)
     sorted_LC = np.sort(LC)[::-1]
-    return sorted_LC
+    return sorted_LC,P_ref,P_alt
 
-def Get_seq(start_pos,end_pos,chr):
-    if int(chr) > 10:
-        id_chr = "".join(["NC_00000",chr])
-    else:
-        id_chr = "".join(["NC_0000",chr])
-    handle = Entrez.efetch(db="nucleotide",
-                       id = id_chr,
-                       rettype = "fasta",
-                       strand = 1,
-                       seq_start = start_pos,
-                       seq_stop  = end_pos)
-    record = SeqIO.read(handle,"fasta")
-    handle.close()
-    return record.seq
+
 
 
 # Create a DeepSEA network and send it to GPU
 CNN = DeepSEA().to(device)
 
 # Read the best parameters shared by the authors of the paper
-best_model = torch.load("/N/u/ppugale/Carbonate/Downloads/best_model.pkl")
+best_model = torch.load("best_model.pkl")
 
 # load the best parameters to newly created DeepSEA network
 CNN.load_state_dict(best_model)
@@ -124,26 +112,25 @@ print("best model loaded")
 # Define cost function and send it to GPU.
 cost_function = nn.BCEWithLogitsLoss().to(device)
 
-
-import pandas as pd
-igap_thresholded_snp_list = pd.read_csv("~/Documents/DeepSEA_Lab/SNPs_Thres_0.05",sep=" ")
-
+seq_list = pickle.load("Sequences.pkl")
 final_results = {}
-
-for i in range(0,len(igap_thresholded_snp_list)):
-    print("Running ...")
-    start_pos = int(igap_thresholded_snp_list["BP"][i]) - 500
-    end_pos = int(igap_thresholded_snp_list["BP"][i]) + 499
-    chr = str(igap_thresholded_snp_list["CHR"][i])
-    rsid = igap_thresholded_snp_list["SNP"][i]
-    alt_allele = igap_thresholded_snp_list["A2"][i].lower()
-    seq = Get_seq(start_pos,end_pos,chr)
-    log_changes = Run_Deepsea(seq,alt_allele)
+detailed_final_results = {}
+for rsid in seq_list.keys():
+    print(f"Running ... {rsid}")
+    seq = seq_list[rsid][0]
+    a1 = seq_list[rsid][1]
+    a1 = seq_list[rsid][2]
+    log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2)
+    detailed_final_results[rsid] = [P_ref,P_alt]
     final_results[rsid] = log_changes
 
-print(final_results)
-output = open('~/Documents/DeepSEA_LAB/Final_Output.pkl','wb')
+print(final_results[rsid])  #Printing the last rsid
+output = open('Final_Output.pkl','wb')
 pickle.dump(final_results,output)
 output.close()
+
+output2 = open('Detailed_Final_Output.pkl','wb')
+pickle.dump(detailed_final_results,output2)
+output2.close()
 
 
