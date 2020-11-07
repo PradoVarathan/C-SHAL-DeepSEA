@@ -14,5 +14,6 @@ for rsid in final_log_output.keys():
     label_output[rsid] = [labels.Label_Name[indx],min_temp]
     
 Top_Labels = pd.DataFrame.from_dict(label_output, orient='index')
-Top_Labels.head()
+Top_Labels = Top_Labels.sort_values(by=[1],ascending=False)
 Top_Labels.to_csv("Log_Results.csv")
+
