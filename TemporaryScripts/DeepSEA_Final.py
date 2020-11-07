@@ -124,7 +124,7 @@ for rsid in seq_list.keys():
         detailed_final_results[rsid] = [P_ref,P_alt]
         final_results[rsid] = log_changes
 
-print(final_results[rsid])  #Printing the last rsid
+
 output = open('Final_Output.pkl','wb')
 pickle.dump(final_results,output)
 output.close()
