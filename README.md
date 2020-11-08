@@ -1,6 +1,6 @@
 
 
-[![LinkedIn][linkedin-shield]]
+![LinkedIn][linkedin-shield]]
 
 
 <!-- PROJECT LOGO -->
