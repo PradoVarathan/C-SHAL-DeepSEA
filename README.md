@@ -67,8 +67,16 @@ Clone the whole git repository into your own system, unix-based OS is required f
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Just using the simple python command with the other mentioned parameters, as follows
+Just using the simple python command with the other mentioned parameters, as follows,
+(`python CSHAL.py --ss='Path_To_Summary_Statistics_File' --w=500 --email='ENtrez_account_email_id' --ak='API KEY' --det=choose among log/all/both`)
+with that, you should be prompted with multiple options if you did not fill it up right.
+* ss --> A summary statistics tab seperated file with columns and headers as SNP,CHR,BP,A1,A2. The columns containing Single Nulceotide Polymorphisms, chormosome, base pair locations, primary allele and secondary allele.
+* --w --> The upstream and downstream width from base pair.
+* --email --> Email for the Entrez ID to obtain sequences.
+* --ak --> API Key from NCBI for faster processing.
+* --det --> Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files.
 
+For more detailed explanation on command line, use (`python CSHAL.py --help`)
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -100,7 +108,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@VarathanPradeep](https://twitter.com/VarathanPradeep) - pradeepvarathanpugalenthi@gmail.com
+ PradeepVarathan - [@VarathanPradeep](https://twitter.com/VarathanPradeep) - pradeepvarathanpugalenthi@gmail.com
 
 Project Link: [https://github.com/PradoVarathan/C-SHAL-DeepSEA](https://github.com/PradoVarathan/C-SHAL-DeepSEA)
 
