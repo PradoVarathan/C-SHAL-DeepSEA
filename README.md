@@ -68,7 +68,10 @@ Clone the whole git repository into your own system, unix-based OS is required f
 ## Usage
 
 Just using the simple python command with the other mentioned parameters, as follows,
-(`python CSHAL.py --ss='Path_To_Summary_Statistics_File' --w=500 --email='ENtrez_account_email_id' --ak='API KEY' --det=choose among log/all/both`)
+
+`python CSHAL.py --ss='Path_To_Summary_Statistics_File' --w=500 --email='ENtrez_account_email_id' --ak='API KEY' --det=choose among log/all/both`
+
+
 with that, you should be prompted with multiple options if you did not fill it up right.
 * ss --> A summary statistics tab seperated file with columns and headers as SNP,CHR,BP,A1,A2. The columns containing Single Nulceotide Polymorphisms, chormosome, base pair locations, primary allele and secondary allele.
 * --w --> The upstream and downstream width from base pair.
