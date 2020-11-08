@@ -165,6 +165,7 @@ if __name__ == '__main__':
             final_results[rsid] = log_changes
 
     if det == "both":
+        print("Final output files are present in pkl format")
         output = open('Final_Output.pkl','wb')
         pickle.dump(final_results,output)
         output.close()
@@ -173,10 +174,12 @@ if __name__ == '__main__':
         pickle.dump(detailed_final_results,output2)
         output2.close()
     elif det == "all":
+        print("Final output file are present in pkl format")
         output2 = open('Detailed_Final_Output.pkl','wb')
         pickle.dump(detailed_final_results,output2)
         output2.close()
     else:
+        print("Final output file are present in pkl format")
         output = open('Final_Output.pkl','wb')
         pickle.dump(final_results,output)
         output.close()
