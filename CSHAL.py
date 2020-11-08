@@ -25,7 +25,7 @@ import click
 
 @click.command()
 @click.option("--ss", prompt="Summary Statistics File",help = "A summary statistics tab seperated file with columns and headers as SNP,CHR,BP,A1,A2. The columns containing Single Nulceotide Polymorphisms, chormosome, base pair locations, primary allele and secondary allele.")
-@click.option("--w",prompt = "BP top obtain from SNP position",help="The upstream and downstream width from base pair")
+@click.option("--w",prompt = "BP top obtain from SNP position",default = 500, type =int, help="The upstream and downstream width from base pair")
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
 @click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
@@ -76,8 +76,7 @@ def log_change(P_ref,P_alt):
   term2 = np.log(P_alt/(1-P_alt))
   return abs(term1-term2)
 
-w = int(w)
-def Run_Deepsea(seq,a1,a2):
+def Run_Deepsea(seq,a1,a2,w):
     seq_ref = seq[0:w] + a1 + seq[(w+1):]
     mapping,seq_one_hot_ref = one_hot_encode(seq_ref)
     x_ref = torch.tensor(seq_one_hot_ref.reshape(1,4,1000),dtype=torch.float).to(device)  #reshaping, converting to tensor and putting on GPU. We nee shape (1,4,1000) since 1st shape represents no of data points
@@ -159,7 +158,7 @@ if __name__ == '__main__':
         a1 = seq_list[rsid][1]
         a2 = seq_list[rsid][2]
         if seq != None:
-            log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2)
+            log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w)
             detailed_final_results[rsid] = [P_ref,P_alt]
             final_results[rsid] = log_changes
 
