@@ -29,7 +29,7 @@ import click
 @click.option("--w",prompt = "BP top obtain from SNP position",help="The upstream and downstream width from base pair")
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
-@click.option("--det",promt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
+@click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
 
 
 
