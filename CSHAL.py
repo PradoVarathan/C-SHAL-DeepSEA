@@ -24,12 +24,12 @@ import click
 
 
 @click.command()
-@click.option("--ss", prompt="Summary Statistics File",
+ss = click.option("--ss", prompt="Summary Statistics File",
                 help = "A summary statistics tab seperated file with columns and headers as SNP,CHR,BP,A1,A2. The columns containing Single Nulceotide Polymorphisms, chormosome, base pair locations, primary allele and secondary allele.")
-@click.option("--w",prompt = "BP top obtain from SNP position",help="The upstream and downstream width from base pair")
-@click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
-@click.option("--ak",prompt="API KEY",help="API key")
-@click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
+w = click.option("--w",prompt = "BP top obtain from SNP position",help="The upstream and downstream width from base pair")
+email = click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
+ak = click.option("--ak",prompt="API KEY",help="API key")
+det = click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
 
 
 
