@@ -1,15 +1,4 @@
-# C-SHAL: DEEPSEA Preparation Tool
-## Chromatin-Sequence Hot encoded Analysis PileLine with DeepSEA network
- ### Introduction
- This python based package is a streamlined pipeline from a simple GWAS summary statistics file or similar formatted file that contains the follwing columns
-  SNP (with their rsid's or other suitable name as label)
-  CHR (chromosome numbers)
-  BP  (base pair position of the SNP)
-  A1  (the effect allele in that position)
-  A2  (the alternate allele in that position)
-  
- ### Step 1
- 
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Issues][issues-shield]][issues-url]
@@ -61,10 +50,6 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`twitter_handle`, `email`
 
 
 ### Built With
@@ -158,3 +143,17 @@ Project Link: [https://github.com/PradoVarathan/C-SHAL-DeepSEA](https://github.c
 
 
 
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=flat-square
+[contributors-url]: https://github.com/github_username/repo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=flat-square
+[forks-url]: https://github.com/github_username/repo/network/members
+[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=flat-square
+[stars-url]: https://github.com/github_username/repo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=flat-square
+[issues-url]: https://github.com/github_username/repo/issues
+[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=flat-square
+[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/github_username
