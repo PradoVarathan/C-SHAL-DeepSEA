@@ -100,7 +100,7 @@ def Run_Deepsea(seq,a1,a2):
 CNN = DeepSEA().to(device)
 
 # Read the best parameters shared by the authors of the paper
-best_model = torch.load("/N/slate/ppugale/DEEPSEA_FULLDATA/Complete_data/deepsea_bestmodel.pkl")
+best_model = torch.load("deepsea_bestmodel.pkl")
 
 # load the best parameters to newly created DeepSEA network
 CNN.load_state_dict(best_model)
