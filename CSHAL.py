@@ -29,7 +29,9 @@ import click
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
 @click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
-
+def opt_values(ss,w,email,ak,det):
+    click.echo("The process will begin now")
+    return ss,w,email,ak,det
 
 
 
@@ -119,7 +121,7 @@ def Get_seq(start_pos,end_pos,chr):
 
 
 if __name__ == '__main__':
-
+    ss,w,email,ak,det = opt_values()
     igap_thresholded_snp_list = pd.read_csv(ss,sep=" ")
     sequences = {}
     Entrez.email  = email
