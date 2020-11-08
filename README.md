@@ -43,41 +43,31 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
   This pipeline is built for the purpose of analysis directly from a summary statistics file for a Genome Wide Analysis Study with the tab seperated format containing columns with labels having :
-* [SNP - single nucleotide variants as either rsids or similar labels]
-* [CHR - chromosome of the SNP]
-* [BP - base pair position of the SNP]
-* [A1 - effect allele of the SNP]
-* [A2 - alternate allele of the SNP]
-  Using the DeepSEA model, built with the convolution networks in deepleaninig using pytorch and has to be worked with GPU and download the pickle file for the best sequences that can be found at []
+* SNP - single nucleotide variants as either rsids or similar labels
+* CHR - chromosome of the SNP
+* BP - base pair position of the SNP
+* A1 - effect allele of the SNP
+* A2 - alternate allele of the SNP
+  Using the DeepSEA model, built with the convolution networks in deepleaninig using pytorch and has to be worked with GPU and download the pickle file for the best hyperparameters that can be found at [GoogleLink](https://drive.google.com/file/d/1ogbiyyAc32BNDDTAao8INIJeVWnnube-/view?usp=sharing). Make sure to have this file in the same directory you run the whole script.
 
 ### Built With
 
-* []()
-* []()
-* []()
+* DeepLearning Packages - Pytorch, Sklearn
+* Data Handling packages - Pandas, Numpy, os, Pickle
+* CLI Packages - Click
+* BioPython
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
-```
+Clone the whole git repository into your own system, unix-based OS is required for now. Install the required packages using pip and download the best hyperparameters model in the same folder where you run the script.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+Just using the simple python command with the other mentioned parameters, as follows
 
 
 <!-- ROADMAP -->
@@ -121,7 +111,7 @@ Project Link: [https://github.com/PradoVarathan/C-SHAL-DeepSEA](https://github.c
 
 * [DeepSEA - Zhou, J., Troyanskaya, O. Predicting effects of noncoding variants with deep learning–based sequence model. Nat Methods 12, 931–934 (2015)](https://doi.org/10.1038/nmeth.3547)
 * [ReadME Template](https://github.com/othneildrew/Best-README-Template)
-* []()
+
 
 
 
