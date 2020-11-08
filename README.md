@@ -1,6 +1,6 @@
 
 
-![LinkedIn][linkedin-shield]]
+![LinkedIn][linkedin-shield]
 
 
 <!-- PROJECT LOGO -->
@@ -31,8 +31,6 @@
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
 * [Usage](#usage)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
@@ -44,9 +42,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
+  This pipeline is built for the purpose of analysis directly from a summary statistics file for a Genome Wide Analysis Study with the tab seperated format containing columns with labels having :
+* [SNP - single nucleotide variants as either rsids or similar labels]
+* [CHR - chromosome of the SNP]
+* [BP - base pair position of the SNP]
+* [A1 - effect allele of the SNP]
+* [A2 - alternate allele of the SNP]
+  Using the DeepSEA model, built with the convolution networks in deepleaninig using pytorch and has to be worked with GPU and download the pickle file for the best sequences that can be found at []
 
 ### Built With
 
@@ -68,19 +70,6 @@ This is an example of how to list things you need to use the software and how to
 ```sh
 npm install npm@latest -g
 ```
-
-### Installation
-
-1. Clone the repo
-```sh
-git clone https://github.com/PradoVarathan/C-SHAL-DeepSEA.git
-```
-2. Install NPM packages
-```sh
-npm install
-```
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -130,8 +119,8 @@ Project Link: [https://github.com/PradoVarathan/C-SHAL-DeepSEA](https://github.c
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
+* [DeepSEA - Zhou, J., Troyanskaya, O. Predicting effects of noncoding variants with deep learning–based sequence model. Nat Methods 12, 931–934 (2015)](https://doi.org/10.1038/nmeth.3547)
+* [ReadME Template](https://github.com/othneildrew/Best-README-Template)
 * []()
 
 
