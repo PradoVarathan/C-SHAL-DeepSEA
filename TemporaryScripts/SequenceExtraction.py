@@ -11,8 +11,8 @@ import pickle
 
 igap_thresholded_snp_list = pd.read_csv("SNPs_Thres_0.05",sep=" ")
 sequences = {}
-Entrez.email  = "pradluzog@gmail.com"
-Entrez.api_key = "98ad62666b4bd2dc831f1824727d74d67c08"
+Entrez.email  = "*@gmail.com"
+Entrez.api_key = "*"
 
 def Get_seq(start_pos,end_pos,chr):
     

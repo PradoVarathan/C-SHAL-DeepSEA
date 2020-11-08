@@ -1,10 +1,10 @@
 import os
 import pickle as pl
 import pandas as pd
-os.chdir("C:/Users/ppugale/OneDrive - Indiana University/Documents/DeepSEA_Lab/")
+os.chdir("")
 
 final_log_output = pl.load(open("Final_Output.pkl","rb"))
-labels = pd.read_csv("C:/Users/ppugale/OneDrive - Indiana University/Documents/DeepSEA/Chromatin-Effects-of-Sequence-Alterations-A-DeepSEA-perp-package/Data/Labels.csv")
+labels = pd.read_csv("Data/Labels.csv")
 label_output = {}
 
 for rsid in final_log_output.keys():
