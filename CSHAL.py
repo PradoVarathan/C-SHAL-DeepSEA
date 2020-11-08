@@ -29,9 +29,69 @@ import click
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
 @click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
-def opt_values(ss,w,email,ak,det):
-    click.echo("The process will begin now")
-    return ss,w,email,ak,det
+def process_cshal(ss,w,email,ak,det):
+    igap_thresholded_snp_list = pd.read_csv(ss,sep=" ")
+    sequences = {}
+    Entrez.email  = email
+    Entrez.api_key = ak
+    w = width
+
+    for i in range(0,len(igap_thresholded_snp_list)):
+        start_pos = int(igap_thresholded_snp_list["BP"][i]) - 500
+        end_pos = int(igap_thresholded_snp_list["BP"][i]) + 499
+        chr = str(igap_thresholded_snp_list["CHR"][i])
+        rsid = igap_thresholded_snp_list["SNP"][i]
+        act_allele = igap_thresholded_snp_list["A1"][i]
+        alt_allele = igap_thresholded_snp_list["A2"][i]
+        seq = Get_seq(start_pos,end_pos,chr)
+        sequences[rsid] = [seq,act_allele,alt_allele]
+        
+
+
+    print("Completed obtaining sequences. Stored in Sequences.pkl")
+    output = open('Sequences.pkl','wb')
+    pickle.dump(sequences,output)
+    output.close()
+
+    CNN = DeepSEA().to(device)
+    best_model = torch.load("deepsea_bestmodel.pkl")
+    CNN.load_state_dict(best_model)
+
+    cost_function = nn.BCEWithLogitsLoss().to(device)
+
+    seq_list = pickle.load(open("Sequences.pkl","rb"))
+    final_results = {}
+    detailed_final_results = {}
+    for rsid in seq_list.keys():
+        print(f"Running ... {rsid}")
+        seq = seq_list[rsid][0]
+        a1 = seq_list[rsid][1]
+        a2 = seq_list[rsid][2]
+        if seq != None:
+            log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w)
+            detailed_final_results[rsid] = [P_ref,P_alt]
+            final_results[rsid] = log_changes
+
+    if det == "both":
+        print("Final output files are present in pkl format")
+        output = open('Final_Output.pkl','wb')
+        pickle.dump(final_results,output)
+        output.close()
+
+        output2 = open('Detailed_Final_Output.pkl','wb')
+        pickle.dump(detailed_final_results,output2)
+        output2.close()
+    elif det == "all":
+        print("Final output file are present in pkl format")
+        output2 = open('Detailed_Final_Output.pkl','wb')
+        pickle.dump(detailed_final_results,output2)
+        output2.close()
+    else:
+        print("Final output file are present in pkl format")
+        output = open('Final_Output.pkl','wb')
+        pickle.dump(final_results,output)
+        output.close()
+    print("Process Completed")
 
 
 
@@ -121,67 +181,6 @@ def Get_seq(start_pos,end_pos,chr):
 
 
 if __name__ == '__main__':
-    ss,w,email,ak,det = opt_values()
-    igap_thresholded_snp_list = pd.read_csv(ss,sep=" ")
-    sequences = {}
-    Entrez.email  = email
-    Entrez.api_key = ak
-    w = width
-
-    for i in range(0,len(igap_thresholded_snp_list)):
-        start_pos = int(igap_thresholded_snp_list["BP"][i]) - 500
-        end_pos = int(igap_thresholded_snp_list["BP"][i]) + 499
-        chr = str(igap_thresholded_snp_list["CHR"][i])
-        rsid = igap_thresholded_snp_list["SNP"][i]
-        act_allele = igap_thresholded_snp_list["A1"][i]
-        alt_allele = igap_thresholded_snp_list["A2"][i]
-        seq = Get_seq(start_pos,end_pos,chr)
-        sequences[rsid] = [seq,act_allele,alt_allele]
-        
-
-
-    print("Completed obtaining sequences. Stored in Sequences.pkl")
-    output = open('Sequences.pkl','wb')
-    pickle.dump(sequences,output)
-    output.close()
-
-    CNN = DeepSEA().to(device)
-    best_model = torch.load("deepsea_bestmodel.pkl")
-    CNN.load_state_dict(best_model)
-
-    cost_function = nn.BCEWithLogitsLoss().to(device)
-
-    seq_list = pickle.load(open("Sequences.pkl","rb"))
-    final_results = {}
-    detailed_final_results = {}
-    for rsid in seq_list.keys():
-        print(f"Running ... {rsid}")
-        seq = seq_list[rsid][0]
-        a1 = seq_list[rsid][1]
-        a2 = seq_list[rsid][2]
-        if seq != None:
-            log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w)
-            detailed_final_results[rsid] = [P_ref,P_alt]
-            final_results[rsid] = log_changes
-
-    if det == "both":
-        print("Final output files are present in pkl format")
-        output = open('Final_Output.pkl','wb')
-        pickle.dump(final_results,output)
-        output.close()
-
-        output2 = open('Detailed_Final_Output.pkl','wb')
-        pickle.dump(detailed_final_results,output2)
-        output2.close()
-    elif det == "all":
-        print("Final output file are present in pkl format")
-        output2 = open('Detailed_Final_Output.pkl','wb')
-        pickle.dump(detailed_final_results,output2)
-        output2.close()
-    else:
-        print("Final output file are present in pkl format")
-        output = open('Final_Output.pkl','wb')
-        pickle.dump(final_results,output)
-        output.close()
+    process_cshal()
     
 
