@@ -21,14 +21,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/PradoVarathan/C-SHAL-DeepSEA">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
-  <h3 align="center">YOUR_TITLE</h3>
+  <h3 align="center">C-SHAL : Deep SEA Pipeline Tool</h3>
 
   <p align="center">
-    YOUR_SHORT_DESCRIPTION
+    Chromatin-Sequence Hot encoded Analysis PileLine with DeepSEA network
     <br />
     <a href="https://github.com/PradoVarathan/C-SHAL-DeepSEA"><strong>Explore the docs »</strong></a>
     <br />
