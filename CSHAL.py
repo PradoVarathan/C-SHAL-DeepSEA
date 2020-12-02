@@ -34,7 +34,7 @@ def process_cshal(ss,w,email,ak,det):
     sequences = {}
     Entrez.email  = email
     Entrez.api_key = ak
-    w = width
+    w = w
 
     for i in range(0,len(igap_thresholded_snp_list)):
         start_pos = int(igap_thresholded_snp_list["BP"][i]) - 500
