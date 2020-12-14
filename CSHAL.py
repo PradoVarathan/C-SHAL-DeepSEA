@@ -29,6 +29,14 @@ import click
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
 @click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
+try:
+  if(torch.cuda.is_available()):
+      print("GPU successfully detected - ")
+      print(torch.cuda.get_device_name(0))
+      device = torch.device("cuda:0")
+except Exception as e:
+  print("GPU not detected. Change the settings as mentioned earlier and run session again")
+  device = torch.device("cpu")
 def process_cshal(ss,w,email,ak,det):
     igap_thresholded_snp_list = pd.read_csv(ss,sep=" ")
     sequences = {}
@@ -77,7 +85,6 @@ def process_cshal(ss,w,email,ak,det):
         output = open('Final_Output.pkl','wb')
         pickle.dump(final_results,output)
         output.close()
-
         output2 = open('Detailed_Final_Output.pkl','wb')
         pickle.dump(detailed_final_results,output2)
         output2.close()
@@ -158,13 +165,11 @@ def Run_Deepsea(seq,a1,a2,w):
     return sorted_LC,P_ref,P_alt
 
 def Get_seq(start_pos,end_pos,chr):
-    
     try:
         if int(chr) < 10:
             id_chr = "".join(["NC_00000",chr])
         else:
             id_chr = "".join(["NC_0000",chr])
-
         handle = Entrez.efetch(db="nucleotide",
                         id = id_chr,
                         rettype = "fasta",
@@ -172,7 +177,6 @@ def Get_seq(start_pos,end_pos,chr):
                         seq_start = start_pos,
                         seq_stop  = end_pos)
         record = SeqIO.read(handle,"fasta")
-        
         return str(record.seq)
     except:
         print("No proper chromosome found ...")
