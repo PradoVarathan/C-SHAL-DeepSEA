@@ -46,20 +46,14 @@ def process_cshal(ss,w,email,ak,det):
         alt_allele = igap_thresholded_snp_list["A2"][i]
         seq = Get_seq(start_pos,end_pos,chr)
         sequences[rsid] = [seq,act_allele,alt_allele]
-        
-
-
     print("Completed obtaining sequences. Stored in Sequences.pkl")
     output = open('Sequences.pkl','wb')
     pickle.dump(sequences,output)
     output.close()
-
     CNN = DeepSEA().to(device)
     best_model = torch.load("deepsea_bestmodel.pkl")
     CNN.load_state_dict(best_model)
-
     cost_function = nn.BCEWithLogitsLoss().to(device)
-
     seq_list = pickle.load(open("Sequences.pkl","rb"))
     final_results = {}
     detailed_final_results = {}
@@ -72,8 +66,7 @@ def process_cshal(ss,w,email,ak,det):
             if 'N' not in seq and 'R' not in seq:
                 log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w,CNN)
                 detailed_final_results[rsid] = [P_ref,P_alt]
-            	final_results[rsid] = log_changes
-
+                final_results[rsid] = log_changes
     if det == "both":
         print("Final output files are present in pkl format")
         output = open('Final_Output.pkl','wb')
