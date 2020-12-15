@@ -29,21 +29,14 @@ import click
 @click.option("--email",prompt="email id",help = "Email for the Entrez ID to obtain sequences")
 @click.option("--ak",prompt="API KEY",help="API key")
 @click.option("--det",prompt="Detail Level of output (log,all,both)",help="Options for the detail in the output file. log only gives basic log terms;all provides all 919 labels and values; both provides both the files")
-try:
-  if(torch.cuda.is_available()):
-      print("GPU successfully detected - ")
-      print(torch.cuda.get_device_name(0))
-      device = torch.device("cuda:0")
-except Exception as e:
-  print("GPU not detected. Change the settings as mentioned earlier and run session again")
-  device = torch.device("cpu")
+
+
 def process_cshal(ss,w,email,ak,det):
-    igap_thresholded_snp_list = pd.read_csv(ss,sep=" ")
+    igap_thresholded_snp_list = pd.read_csv(ss,sep=",")
     sequences = {}
     Entrez.email  = email
     Entrez.api_key = ak
     w = w
-
     for i in range(0,len(igap_thresholded_snp_list)):
         start_pos = int(igap_thresholded_snp_list["BP"][i]) - 500
         end_pos = int(igap_thresholded_snp_list["BP"][i]) + 499
@@ -76,9 +69,10 @@ def process_cshal(ss,w,email,ak,det):
         a1 = seq_list[rsid][1]
         a2 = seq_list[rsid][2]
         if seq != None:
-            log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w)
-            detailed_final_results[rsid] = [P_ref,P_alt]
-            final_results[rsid] = log_changes
+            if 'N' not in seq and 'R' not in seq:
+                log_changes,P_ref,P_alt = Run_Deepsea(seq,a1,a2,w,CNN)
+                detailed_final_results[rsid] = [P_ref,P_alt]
+            	final_results[rsid] = log_changes
 
     if det == "both":
         print("Final output files are present in pkl format")
@@ -143,16 +137,15 @@ class DeepSEA(nn.Module):
 def log_change(P_ref,P_alt):
   term1 = np.log(P_ref/(1-P_ref))
   term2 = np.log(P_alt/(1-P_alt))
-  return abs(term1-term2)
+  return (term1-term2)
 
-def Run_Deepsea(seq,a1,a2,w):
+def Run_Deepsea(seq,a1,a2,w,CNN):
     seq_ref = seq[0:w] + a1 + seq[(w+1):]
     mapping,seq_one_hot_ref = one_hot_encode(seq_ref)
     x_ref = torch.tensor(seq_one_hot_ref.reshape(1,4,1000),dtype=torch.float).to(device)  #reshaping, converting to tensor and putting on GPU. We nee shape (1,4,1000) since 1st shape represents no of data points
     seq_alt = seq[0:w] + a2 +seq[(w+1):]
     mapping, seq_one_hot_alt = one_hot_encode(seq_alt)
     x_alt =  torch.tensor(seq_one_hot_alt.reshape(1,4,1000),dtype=torch.float).to(device)
-    CNN.eval()
     with torch.no_grad(): 
         y_pred_ref =  CNN(x_ref)
         y_pred_alt = CNN(x_alt)
@@ -185,6 +178,9 @@ def Get_seq(start_pos,end_pos,chr):
 
 
 if __name__ == '__main__':
+    print("GPU successfully detected - ")
+    print(torch.cuda.get_device_name(0))
+    device = torch.device("cuda:0")
     process_cshal()
     
 
