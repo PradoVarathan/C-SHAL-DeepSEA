@@ -1,0 +1,11 @@
+name,nAnno,nOverlap,fc,zscore,pvalue,adjp,or,CIl,CIu
+Alzheimers disease,867,32,15.7,21.2,3.3e-29,4.9e-28,22.2,14.2,34.1
+tauopathy,889,32,15.3,20.9,7.2e-29,5.4e-28,21.7,13.8,33.2
+neurodegenerative disease,1335,32,10.2,16.6,1.8e-23,9.2e-23,14.1,9.04,21.6
+fibrinogen measurement,126,6,20.3,10.5,5.7e-07,2.2e-06,22.4,7.88,51.7
+coagulation factor measurement,215,6,11.9,7.76,1.3e-05,3.8e-05,12.8,4.55,29.3
+high density lipoprotein cholesterol measurement,652,7,4.57,4.46,0.00091,0.0023,4.85,1.9,10.4
+systemic lupus erythematosus,576,5,3.7,3.16,0.012,0.025,3.85,1.22,9.3
+lipoprotein measurement,1481,8,2.3,2.47,0.024,0.043,2.41,1.01,4.93
+lipid measurement,1509,8,2.26,2.41,0.026,0.043,2.36,0.991,4.83
+lipid or lipoprotein measurement,1956,9,1.96,2.1,0.041,0.062,2.05,0.909,4.04
